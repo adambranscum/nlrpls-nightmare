@@ -14,7 +14,7 @@ function cosineSim(a, b) {
 // Returns top-K most relevant chunks for a question.
 // TODO: swap this for sqlite-vec once it's installed — this brute-forces
 // cosine similarity in JS, fine for a few thousand chunks, not beyond that.
-export async function retrieveContext(question, topK = 5) {
+export async function retrieveContext(question, topK = 8) {
   const queryVec = await embed(question);
 
   const rows = db.prepare(`SELECT id, source_file, chunk_index, content, embedding FROM chunks`).all();
