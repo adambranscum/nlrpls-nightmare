@@ -53,6 +53,7 @@ export default function ChatPage() {
           content: data.answer || data.error || 'No answer came back.',
           sources: data.sources,
           webSearches: data.webSearches,
+          devicesQueried: data.devicesQueried,
         },
       ]);
     } catch {
@@ -68,7 +69,7 @@ export default function ChatPage() {
   return (
     <div className="screen">
       <div className="topbar">
-        <h1>Ethan</h1>
+        <h1>Nightmare Nightmare Nightmare</h1>
         <span className="badge">NLRPLS IT Reference</span>
       </div>
 
@@ -90,6 +91,15 @@ export default function ChatPage() {
                 {m.webSearches.map((q, j) => (
                   <span key={j} className="source-chip">
                     🌐 {q}
+                  </span>
+                ))}
+              </div>
+            )}
+            {m.devicesQueried?.length > 0 && (
+              <div className="sources">
+                {m.devicesQueried.map((d, j) => (
+                  <span key={j} className="source-chip">
+                    🔌 {d} (live)
                   </span>
                 ))}
               </div>
