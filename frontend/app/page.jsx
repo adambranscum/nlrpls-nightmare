@@ -2,11 +2,17 @@
 
 import { useState, useRef, useEffect } from 'react';
 
+function getGreeting() {
+  const hour = new Date().getHours();
+  const timeOfDay = hour < 12 ? 'morning' : hour < 18 ? 'afternoon' : 'evening';
+  return `Good ${timeOfDay}, sir. How can I help you?`;
+}
+
 export default function ChatPage() {
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
-      content: "Hey, I'm nightmare — ask me anything about our IT setup.",
+      content: getGreeting(),
     },
   ]);
   const [input, setInput] = useState('');
@@ -46,6 +52,7 @@ export default function ChatPage() {
           role: 'assistant',
           content: data.answer || data.error || 'No answer came back.',
           sources: data.sources,
+          webSearches: data.webSearches,
         },
       ]);
     } catch {
@@ -61,7 +68,7 @@ export default function ChatPage() {
   return (
     <div className="screen">
       <div className="topbar">
-        <h1>nightmare</h1>
+        <h1>Ethan</h1>
         <span className="badge">NLRPLS IT Reference</span>
       </div>
 
@@ -74,6 +81,15 @@ export default function ChatPage() {
                 {m.sources.map((s, j) => (
                   <span key={j} className="source-chip">
                     {s.file} #{s.chunk}
+                  </span>
+                ))}
+              </div>
+            )}
+            {m.webSearches?.length > 0 && (
+              <div className="sources">
+                {m.webSearches.map((q, j) => (
+                  <span key={j} className="source-chip">
+                    🌐 {q}
                   </span>
                 ))}
               </div>
